@@ -22,7 +22,7 @@ public class ModularClient implements ApiClient {
 
     /*
     @Override
-    public ChannelSearchResponse searchOrg(String channel) throws IOException {
+    public ChannelSearchResponse orgSearchApi(String channel) throws IOException {
         Request request = new Request.Builder()
                 .url(apiHost + channel)
                 .get()
@@ -34,10 +34,10 @@ public class ModularClient implements ApiClient {
     */
 
     @Override
-    public ChannelSearchResponse searchOrg(String channel) throws IOException {
+    public ChannelSearchResponse orgSearchApi(String channel) throws IOException {
         Response httpResponse = searchOrgApiCall(channel);
         String responseBody = httpResponse.body().string();
-        return null;
+        return parseOrgResponse(responseBody);
     }
 
     public Response searchOrgApiCall(String channel) throws IOException {

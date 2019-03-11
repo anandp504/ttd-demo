@@ -86,4 +86,18 @@ public class TestSearchApi {
         ChannelSearchResponse channelSearchResponse = client.parseOrgResponse(ResponseData.responseWithLocation);
         assertEquals("969dd3c1-4e98-4c17-a994-559f2dc70e18", String.join("," , channelSearchResponse.value()));
     }
+
+    @Test
+    public void searchOrgApiShouldValidChannelSearchResponse() throws IOException {
+        interceptor.addRule()
+                .get()
+                .url(mockApiEndPoint + "0125134851644620800")
+                .answer(request -> new Response.Builder()
+                        .code(200)
+                        .body(ResponseBody.create(MEDIATYPE_JSON, ResponseData.responseWithLocation)));
+        mockHttpClient = new OkHttpClient().newBuilder().addInterceptor(interceptor).build();
+        client = new ModularClient(mockApiEndPoint, mockHttpClient);
+        ChannelSearchResponse channelSearchResponse = client.orgSearchApi("0125134851644620800");
+        assertEquals("969dd3c1-4e98-4c17-a994-559f2dc70e18", String.join("," , channelSearchResponse.value()));
+    }
 }

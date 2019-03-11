@@ -21,7 +21,7 @@ public class MonolithClient {
         this.httpClient = new OkHttpClient();
     }
 
-    // public String searchOrg(String channel) throws IOException {
+    // public String orgSearchApi(String channel) throws IOException {
     public List<String> searchOrg(String channel) throws IOException {
         Request request = new Request.Builder()
                 .url("http://localhost:9000/org/search/" + channel)
