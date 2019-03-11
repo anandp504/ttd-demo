@@ -10,6 +10,7 @@ import okhttp3.Response;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.List;
 
 
 public class MonolithClient {
@@ -20,7 +21,8 @@ public class MonolithClient {
         this.httpClient = new OkHttpClient();
     }
 
-    public String searchOrg(String channel) throws IOException {
+    // public String searchOrg(String channel) throws IOException {
+    public List<String> searchOrg(String channel) throws IOException {
         Request request = new Request.Builder()
                 .url("http://localhost:9000/org/search/" + channel)
                 .get()
@@ -35,6 +37,7 @@ public class MonolithClient {
             }
             if (channelSearchResponse.value() != null) {
                 System.out.println("SEARCH SERVICE RESPONSE SUCCESSFUL. RESPONSE: " + channelSearchResponse.toString());
+                // return channelSearchResponse.value();
                 return channelSearchResponse.value();
             }
         } catch (Exception ex) {

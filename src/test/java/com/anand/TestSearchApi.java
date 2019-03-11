@@ -84,6 +84,6 @@ public class TestSearchApi {
     @Test
     public void testOrgResponseJsonParser() {
         ChannelSearchResponse channelSearchResponse = client.parseOrgResponse(ResponseData.responseWithLocation);
-        assertEquals("969dd3c1-4e98-4c17-a994-559f2dc70e18", channelSearchResponse.value());
+        assertEquals("969dd3c1-4e98-4c17-a994-559f2dc70e18", String.join("," , channelSearchResponse.value()));
     }
 }

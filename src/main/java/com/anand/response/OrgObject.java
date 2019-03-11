@@ -1,10 +1,13 @@
 package com.anand.response;
 
+import java.util.List;
+
 public class OrgObject {
     private String name;
     private String identifier;
     // private String locationId;
-    private String locationIds;
+    // private String locationIds;
+    private List<String> locationIds;
 
 
     public String name() {
@@ -21,7 +24,7 @@ public class OrgObject {
     }
     */
 
-    public String locationIds() {
+    public List<String> locationIds() {
         return locationIds;
     }
 
@@ -31,7 +34,8 @@ public class OrgObject {
                 "name='" + name + '\'' +
                 ", identifier='" + identifier + '\'' +
                 // ", locationId=" + locationId +
-                ", locationIds=" + locationIds +
+                // ", locationIds=" + locationIds +
+                ", locationIds=[" + String.join(",", locationIds) + "]" +
                 '}';
     }
 }
