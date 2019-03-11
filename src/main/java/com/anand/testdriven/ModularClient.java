@@ -7,6 +7,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ModularClient implements ApiClient {
@@ -38,7 +39,8 @@ public class ModularClient implements ApiClient {
     public List<String> orgSearchApi(String channel) throws IOException {
         Response httpResponse = searchOrgApiCall(channel);
         String responseBody = httpResponse.body().string();
-        return parseOrgResponse(responseBody).value();
+        List<String> locationIds = parseOrgResponse(responseBody).value();
+        return locationIds == null ? new ArrayList<String>() : locationIds;
     }
 
     public Response searchOrgApiCall(String channel) throws IOException {

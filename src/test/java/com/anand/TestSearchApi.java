@@ -86,7 +86,7 @@ public class TestSearchApi {
     }
 
     @Test
-    public void searchOrgApiShouldValidChannelSearchResponse() throws IOException {
+    public void searchOrgApiShouldReturnValidLocationIds() throws IOException {
         interceptor.addRule()
                 .get()
                 .url(mockApiEndPoint + "0125134851644620800")
@@ -97,5 +97,20 @@ public class TestSearchApi {
         client = new ModularClient(mockApiEndPoint, mockHttpClient);
         List<String> locationIds = client.orgSearchApi("0125134851644620800");
         assertEquals("969dd3c1-4e98-4c17-a994-559f2dc70e18", String.join("," , locationIds));
+    }
+
+    @Test
+    public void searchOrgApiShouldHandleEmptyLocationIds() throws IOException {
+        interceptor.addRule()
+                .get()
+                .url(mockApiEndPoint + "0125134851644620800")
+                .answer(request -> new Response.Builder()
+                        .code(200)
+                        .body(ResponseBody.create(MEDIATYPE_JSON, ResponseData.RESPONSE_WITHOUT_LOCATION_IDS)));
+        mockHttpClient = new OkHttpClient().newBuilder().addInterceptor(interceptor).build();
+        client = new ModularClient(mockApiEndPoint, mockHttpClient);
+        List<String> locationIds = client.orgSearchApi("0125134851644620800");
+        // assertEquals("969dd3c1-4e98-4c17-a994-559f2dc70e18", String.join("," , locationIds));
+        assertEquals(0, locationIds.size());
     }
 }
