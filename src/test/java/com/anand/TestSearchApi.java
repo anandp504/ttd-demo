@@ -1,19 +1,17 @@
 package com.anand;
 
 import com.anand.response.ChannelSearchResponse;
-import com.anand.testdriven.ApiClient;
 import com.anand.testdriven.ModularClient;
 import com.google.gson.Gson;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import okhttp3.mock.MockInterceptor;
-import okhttp3.mock.Rule;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.List;
 
 import static okhttp3.mock.MediaTypes.MEDIATYPE_JSON;
 import static org.junit.Assert.assertEquals;
@@ -72,7 +70,7 @@ public class TestSearchApi {
                 .url(mockApiEndPoint + "0125134851644620800")
                 .answer(request -> new Response.Builder()
                         .code(200)
-                        .body(ResponseBody.create(MEDIATYPE_JSON, ResponseData.responseWithLocation)));
+                        .body(ResponseBody.create(MEDIATYPE_JSON, ResponseData.RESPONSE_WITH_LOCATION_IDS)));
         mockHttpClient = new OkHttpClient().newBuilder().addInterceptor(interceptor).build();
         client = new ModularClient(mockApiEndPoint, mockHttpClient);
         Response response = client.searchOrgApiCall("0125134851644620800");
@@ -83,7 +81,7 @@ public class TestSearchApi {
 
     @Test
     public void testOrgResponseJsonParser() {
-        ChannelSearchResponse channelSearchResponse = client.parseOrgResponse(ResponseData.responseWithLocation);
+        ChannelSearchResponse channelSearchResponse = client.parseOrgResponse(ResponseData.RESPONSE_WITH_LOCATION_IDS);
         assertEquals("969dd3c1-4e98-4c17-a994-559f2dc70e18", String.join("," , channelSearchResponse.value()));
     }
 
@@ -94,10 +92,10 @@ public class TestSearchApi {
                 .url(mockApiEndPoint + "0125134851644620800")
                 .answer(request -> new Response.Builder()
                         .code(200)
-                        .body(ResponseBody.create(MEDIATYPE_JSON, ResponseData.responseWithLocation)));
+                        .body(ResponseBody.create(MEDIATYPE_JSON, ResponseData.RESPONSE_WITH_LOCATION_IDS)));
         mockHttpClient = new OkHttpClient().newBuilder().addInterceptor(interceptor).build();
         client = new ModularClient(mockApiEndPoint, mockHttpClient);
-        ChannelSearchResponse channelSearchResponse = client.orgSearchApi("0125134851644620800");
-        assertEquals("969dd3c1-4e98-4c17-a994-559f2dc70e18", String.join("," , channelSearchResponse.value()));
+        List<String> locationIds = client.orgSearchApi("0125134851644620800");
+        assertEquals("969dd3c1-4e98-4c17-a994-559f2dc70e18", String.join("," , locationIds));
     }
 }

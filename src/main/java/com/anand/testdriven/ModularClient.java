@@ -7,6 +7,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.util.List;
 
 public class ModularClient implements ApiClient {
 
@@ -34,10 +35,10 @@ public class ModularClient implements ApiClient {
     */
 
     @Override
-    public ChannelSearchResponse orgSearchApi(String channel) throws IOException {
+    public List<String> orgSearchApi(String channel) throws IOException {
         Response httpResponse = searchOrgApiCall(channel);
         String responseBody = httpResponse.body().string();
-        return parseOrgResponse(responseBody);
+        return parseOrgResponse(responseBody).value();
     }
 
     public Response searchOrgApiCall(String channel) throws IOException {
