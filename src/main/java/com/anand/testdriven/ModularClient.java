@@ -22,19 +22,6 @@ public class ModularClient implements ApiClient {
         this.httpClient = httpClient;
     }
 
-    /*
-    @Override
-    public ChannelSearchResponse orgSearchApi(String channel) throws IOException {
-        Request request = new Request.Builder()
-                .url(apiHost + channel)
-                .get()
-                .build();
-        Response response = httpClient.newCall(request).execute();
-        String responseBody = response.body().string();
-        return null;
-    }
-    */
-
     @Override
     public List<String> orgSearchApi(String channel) throws IOException {
         Response httpResponse = searchOrgApiCall(channel);
